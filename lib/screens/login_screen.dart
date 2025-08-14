@@ -42,7 +42,13 @@ class LoginScreen extends StatelessWidget {
                     onPress: () async {
                       try {
                         await context.read<LoginProvider>().login(emailController.text.trim(), passwordController.text.trim());
-                        Navigator.pushReplacement(
+                         final token = loginProvider.userModel?.token;
+                        await UserInformation.saveToken(
+                          loginProvider.userModel!.token!,
+                            loginProvider.userModel!.username!,
+                          loginProvider.userModel!.email!, );
+
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (_) => DashboardScreen()),
                         );
